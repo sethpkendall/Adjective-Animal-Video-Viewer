@@ -8,11 +8,13 @@ const ButtonPanel = (props) => {
                 <div className="subsection buttonsDisplay">
                    <ButtonGroup
                        method={props.onAnimalSelect}
+                       type="animal"
                        terms={props.animals} />
                 </div>
                 <div id="adjectiveButtons" className="subsection buttonsDisplay">
                     <ButtonGroup
                         method={props.onAdjectiveSelect}
+                        type="adjective"
                         terms={props.adjectives} />
                 </div>
             </div>

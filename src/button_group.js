@@ -1,8 +1,29 @@
 import React from 'react';
 
-const ButtonGroup = ({terms, method}) => {
+const ButtonGroup = ({terms, method, type}) => {
+
     const mapToButtons = terms.map((term) =>{
-        return <button className="btn btn-primary" onClick={() =>method(term)}>{term}</button>
+        const clickFunction = () => {
+            if(type === "animal"){
+                let buttons = document.getElementsByClassName('animal');
+                for(let i=0; i<buttons.length;i++){
+                    buttons[i].className = "btn btn-primary animal";
+                }
+                let clickedButton = document.getElementById(term);
+                clickedButton.className = "btn btn-success animal";
+            } else if (type === "adjective"){
+                console.log('test');
+                let currentClass = document.getElementById(term).className;
+                if (currentClass === 'btn btn-primary adjective'){
+                    document.getElementById(term).className = "btn btn-success adjective";
+                } else if(currentClass === 'btn btn-success adjective'){
+                    document.getElementById(term).className = "btn btn-primary adjective";
+                }
+            }
+
+            method(term);
+        }
+        return <button id={term} key={term} className={`btn btn-primary ${type}`} onClick={clickFunction}>{term}</button>
     });
 
     return (
@@ -10,10 +31,6 @@ const ButtonGroup = ({terms, method}) => {
             {mapToButtons}
         </div>
     )
-
-                // <div><button className="btn btn-primary">Button1</button> <button className="btn btn-primary">Button2</button> <button className="btn btn-primary">Button3</button> <button className="btn btn-primary">Button4</button></div>
-                // <div> <button className="btn btn-primary">Button5</button> <button className="btn btn-primary">Button6</button> <button className="btn btn-primary">Button7</button> <button className="btn btn-primary">Button8</button></div>
-
 }
 
 export default ButtonGroup;

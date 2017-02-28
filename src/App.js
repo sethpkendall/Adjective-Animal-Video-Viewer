@@ -20,15 +20,20 @@ class App extends Component {
         this.getVids(this.state.selectedAnimal);
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        this.getVids(this.state.selectedAnimal);
-    }
+    // componentWillUpdate(nextProps, nextState) {
+    //     this.getVids(this.state.selectedAnimal);
+    // }
 
     updateVideo(selectedAnimal) {
         this.setState({selectedAnimal});
-        let newSearch;
-        if(this.state.selectedAdjectives){
-            console.log(this.state.selectedAdjectives);
+        let newSearch = '';
+        if(this.state.selectedAdjectives.length > 0){
+            this.state.selectedAdjectives.forEach(function(adj){
+                newSearch += adj + ' ';
+            });
+            newSearch += this.state.selectedAnimal;
+            console.log(newSearch);
+            this.getVids(newSearch);
         }
     }
 
@@ -40,6 +45,12 @@ class App extends Component {
         });
     }
 
+    updateAnimal(selectedAnimal) {
+        this.setState({selectedAnimal})
+        let buttons = document.getElementsByClassName('animal');
+        console.log(buttons);
+    }
+
     updateAdjectives(newAdjective) {
         let newAdjectives = this.state.selectedAdjectives;
         let ifExists = newAdjectives.indexOf(newAdjective);
@@ -48,7 +59,7 @@ class App extends Component {
         } else {
             newAdjectives.splice(ifExists,1);
         }
-        console.log(newAdjectives);
+        this.updateVideo(this.state.selectedAnimal);
     }
 
     render() {
@@ -60,7 +71,7 @@ class App extends Component {
                 <div className="App-intro">
                     <div className="row">
                         <ButtonPanel
-                            onAnimalSelect={selectedAnimal =>this.setState({selectedAnimal})}
+                            onAnimalSelect={selectedAnimal =>this.updateAnimal(selectedAnimal)}
                             onAdjectiveSelect={selectedAdjective =>this.updateAdjectives(selectedAdjective)}
                             animals={this.state.animals}
                             adjectives={this.state.adjectives}/>
