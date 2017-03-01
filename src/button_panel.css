@@ -1,0 +1,14 @@
+#currentSearch {
+    text-align: center;
+}
+
+.buttonsDisplay {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    background-color: antiquewhite;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 3px;
+}

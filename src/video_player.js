@@ -1,6 +1,6 @@
 import React from 'react';
 
-const VideoPlayer = ({video}) => {
+const VideoPlayer = ({video, onVideoNumberStep}) => {
     if(!video){
         return <div>Loading...</div>;
     }
@@ -13,8 +13,9 @@ const VideoPlayer = ({video}) => {
                     <iframe className="embed-responsive-item" src={url}></iframe>
                 </div>
                 <div className="description">
-                    <div>{video.snippet.title}</div>
+                    <div><u>{video.snippet.title}</u></div>
                     <div>{video.snippet.description}</div>
+                    {/*<div id="nextVideoButton"><button onClick={()=>onVideoNumberStep()} className="btn btn-primary">{videoNumber}</button> </div>*/}
                 </div>
             </div>
         </div>

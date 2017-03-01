@@ -12,26 +12,35 @@ class App extends Component {
         this.state = {
             videos: [],
             selectedAnimal: "Cat",
-            selectedAdjectives: [],
-            animals: ["Cat", "Dog", "Fox","Fish"],
-            adjectives: ["Big", "Cute", "Sad", "Happy"]
+            selectedAdjectives: ["Cute"],
+            // videoNumber: 0,
+            animals: ["Cat", "Dog", "Fox","Fish", "Hippo", "Giraffe", "Tiger", "Lion", "Horse"],
+            adjectives: ["Cute", "Big", "Sad", "Happy", "Crazy", "Sleepy", "Angry", "Giant", "Tiny"]
         };
 
         this.getVids(this.state.selectedAnimal);
     }
 
-    // componentWillUpdate(nextProps, nextState) {
-    //     this.getVids(this.state.selectedAnimal);
-    // }
+    componentDidMount() {
+        let selectedAnimal = this.state.selectedAnimal;
+        let selectedAdjectives = this.state.selectedAdjectives;
+        selectedAdjectives.forEach(function(adjective){
+            document.getElementById(adjective).className = "btn btn-success adjective";
+        });
+        document.getElementById(selectedAnimal).className = "btn btn-success animal";
+    }
 
     updateVideo(selectedAnimal) {
-        this.setState({selectedAnimal});
         let newSearch = '';
         if(this.state.selectedAdjectives.length > 0){
             this.state.selectedAdjectives.forEach(function(adj){
                 newSearch += adj + ' ';
             });
             newSearch += this.state.selectedAnimal;
+            console.log(newSearch);
+            this.getVids(newSearch);
+        } else {
+            newSearch = this.state.selectedAnimal;
             console.log(newSearch);
             this.getVids(newSearch);
         }
@@ -46,10 +55,10 @@ class App extends Component {
     }
 
     updateAnimal(selectedAnimal) {
-        this.setState({selectedAnimal})
-        let buttons = document.getElementsByClassName('animal');
-        console.log(buttons);
+        this.setState({selectedAnimal});
+        setTimeout(function(){this.updateVideo(selectedAnimal)}.bind(this), 500);
     }
+
 
     updateAdjectives(newAdjective) {
         let newAdjectives = this.state.selectedAdjectives;
@@ -61,6 +70,14 @@ class App extends Component {
         }
         this.updateVideo(this.state.selectedAnimal);
     }
+
+    // videoNumberStep(){
+    //     this.state.videoNumber++;
+    //     let test = this.refs.test;
+    //     test.forceUpdate();
+    //     console.log(this.state.videoNumber);
+    //     document.getElementById("VideoPlayer").forceUpdate();
+    // }
 
     render() {
         return (
@@ -74,8 +91,12 @@ class App extends Component {
                             onAnimalSelect={selectedAnimal =>this.updateAnimal(selectedAnimal)}
                             onAdjectiveSelect={selectedAdjective =>this.updateAdjectives(selectedAdjective)}
                             animals={this.state.animals}
+                            selectedAnimal={this.state.selectedAnimal}
+                            selectedAdjectives={this.state.selectedAdjectives}
                             adjectives={this.state.adjectives}/>
-                        <VideoPlayer video={this.state.videos[0]}/>
+                        <VideoPlayer
+                            /*onVideoNumberStep={() =>this.videoNumberStep()}*/
+                            video={this.state.videos[0]}/>
                     </div>
                 </div>
             </div>

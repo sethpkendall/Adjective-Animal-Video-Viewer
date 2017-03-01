@@ -1,4 +1,5 @@
 import React from 'react';
+import './button_group.css';
 
 const ButtonGroup = ({terms, method, type}) => {
 
@@ -20,12 +21,10 @@ const ButtonGroup = ({terms, method, type}) => {
                     document.getElementById(term).className = "btn btn-primary adjective";
                 }
             }
-
             method(term);
         }
         return <button id={term} key={term} className={`btn btn-primary ${type}`} onClick={clickFunction}>{term}</button>
     });
-
     return (
         <div>
             {mapToButtons}
